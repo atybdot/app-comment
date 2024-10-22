@@ -22,9 +22,7 @@
     "biome:ci": "biome ci .",
     "pub:release": "pnpm build && pnpm publish --access public"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
     "node-appwrite": "^14.1.0"
   },

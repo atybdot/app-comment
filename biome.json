@@ -22,7 +22,7 @@
       "recommended": true,
       "nursery": {
         "recommended": true,
-        "useConsistentMemberAccessibility": "info"
+        "useConsistentMemberAccessibility": "off"
       },
       "correctness": {
         "recommended": true
@@ -32,7 +32,7 @@
       },
       "suspicious": {
         "recommended": true,
-        "noAssignInExpressions": "info"
+        "noAssignInExpressions": "off"
       }
     }
   },
