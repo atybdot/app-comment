@@ -21,8 +21,11 @@
 		"code-check:fix": "biome check --apply-unsafe .",
 		"biome:ci": "biome ci ."
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"dependencies": {
+		"@app-comment/core": "link:",
 		"node-appwrite": "^14.1.0"
 	},
 	"devDependencies": {
