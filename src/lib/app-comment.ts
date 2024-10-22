@@ -1,5 +1,5 @@
 import * as sdk from "node-appwrite";
-import {
+import type {
   allUserParams,
   boolOpt,
   createDoc,
@@ -251,7 +251,7 @@ class appcomment {
     options,
   }: boolOpt) {
     const name = options.name.trim().split(" ").join("-");
-    let defaultValue = options?.isArray ? undefined : options?.defaultValue;
+    const defaultValue = options?.isArray ? undefined : options?.defaultValue;
 
     try {
       if (collectionId && databaseId) {
@@ -277,7 +277,7 @@ class appcomment {
     options,
   }: stringOpt) {
     const name = options.name.trim().split(" ").join("-");
-    let defaultValue = options?.isArray ? undefined : options?.defaultValue;
+    const defaultValue = options?.isArray ? undefined : options?.defaultValue;
     try {
       if (collectionId && databaseId) {
         return await this.databases.createStringAttribute(
@@ -302,7 +302,7 @@ class appcomment {
     options,
   }: IntergerOpt) {
     const name = options.name.trim().split(" ").join("-");
-    let defaultValue = options?.isArray ? undefined : options?.defaultValue;
+    const defaultValue = options?.isArray ? undefined : options?.defaultValue;
     try {
       if (collectionId && databaseId) {
         return await this.databases.createIntegerAttribute(
