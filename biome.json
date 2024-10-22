@@ -6,8 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": []
+    "ignore": ["dist/*.*", "node_modules/**/*"]
   },
   "formatter": {
     "enabled": true,
