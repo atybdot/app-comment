@@ -20,7 +20,8 @@
     "code-check": "biome check .",
     "code-check:fix": "biome check --apply-unsafe .",
     "biome:ci": "biome ci .",
-    "pub:release": "pnpm build && pnpm publish --access public --no-git-checks"
+    "pub:release": "pnpm build && pnpm publish --access public --no-git-checks",
+    "prepare": "husky"
   },
   "files": ["dist"],
   "dependencies": {
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.7.7",
+    "husky": "^9.1.6",
     "tslib": "^2.8.0",
     "tsup": "^8.3.0",
     "typescript": "^5.6.3"

@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@app-comment/core':
-        specifier: 'link:'
-        version: 'link:'
       node-appwrite:
         specifier: ^14.1.0
         version: 14.1.0
@@ -25,6 +22,9 @@ importers:
       '@types/node':
         specifier: ^22.7.7
         version: 22.7.7
+      husky:
+        specifier: ^9.1.6
+        version: 9.1.6
       tslib:
         specifier: ^2.8.0
         version: 2.8.0
@@ -482,6 +482,11 @@ packages:
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
+
+  husky@9.1.6:
+    resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
@@ -1096,6 +1101,8 @@ snapshots:
       path-scurry: 1.11.1
 
   human-signals@2.1.0: {}
+
+  husky@9.1.6: {}
 
   is-binary-path@2.1.0:
     dependencies:
