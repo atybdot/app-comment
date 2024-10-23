@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "author": "aybdot <180611249+atybdot@users.noreply.github.com> (https://github.com/atybdot)",
   "license": "MIT",
-  "homepage": "https://github.com/atybdot/app-comment",
+  "homepage": "https://github.com/atybdot/app-comment-core",
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
@@ -43,10 +43,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atybdot/app-comment.git"
+    "url": "git+https://github.com/atybdot/app-comment-core.git"
   },
   "bugs": {
-    "url": "https://github.com/atybdot/app-comment/issues"
+    "url": "https://github.com/atybdot/app-comment-core/issues"
   },
   "keywords": [
     "appwrite",
