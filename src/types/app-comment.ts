@@ -16,11 +16,14 @@ export type document = {
   collectionId: string | undefined
 }
 
+export type getDoc = document & documentId & query
+
 export type createDoc = document & {
   data: object
   userId: string
 }
-export type listDocs = document & {
+
+export type query = document & {
   query?: Array<string>
 }
 export type documentId = document & {

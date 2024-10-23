@@ -5,7 +5,8 @@ import type {
   createDoc,
   createUser,
   documentId,
-  listDocs,
+  getDoc,
+  query,
   stringOpt,
   updateDoc,
   user,
@@ -38,11 +39,11 @@ class appcomment {
   }
 
   // ##### CLIENT ######
-  setDatabaseId(id: string) {
+  private setDatabaseId(id: string) {
     return (this.databaseId = id)
   }
 
-  setCollectionId(id: string) {
+  private setCollectionId(id: string) {
     return (this.collectionId = id)
   }
 
@@ -66,7 +67,7 @@ class appcomment {
     try {
       const account = await this.account.create(userId, email, password, name)
       if (account) {
-        this.login({ email, password })
+        this.userLogin({ email, password })
         return account
       }
     } catch (err) {
@@ -74,7 +75,7 @@ class appcomment {
     }
   }
 
-  async login({ email, password }: user) {
+  async userLogin({ email, password }: user) {
     try {
       return await this.account.createEmailPasswordSession(email, password)
     } catch (err) {
@@ -82,7 +83,7 @@ class appcomment {
     }
   }
 
-  async getCurrentUser() {
+  async getLoggedInUser() {
     try {
       return await this.account.get()
     } catch (error) {
@@ -90,7 +91,7 @@ class appcomment {
     }
   }
 
-  async logout() {
+  async userLogout() {
     try {
       this.account.deleteSessions()
     } catch (error) {
@@ -118,10 +119,13 @@ class appcomment {
   }
   // ############ DATABSE #################
 
-  async createDatabase(databaseName = "app-comment") {
+  async createDatabase(
+    databaseId = this.databaseId,
+    databaseName = "app-comment",
+  ) {
     try {
-      this.databaseId = "app-comment"
-      return await this.databases.create("app-comment", databaseName)
+      this.databaseId = databaseId || "app-comment"
+      return await this.databases.create(this.databaseId, databaseName)
     } catch (err) {
       throw new Error(`Error creating database :: appwrite\n ${err}`)
     }
@@ -137,9 +141,13 @@ class appcomment {
     }
   }
 
-  async createCollection(databaseId = this.databaseId) {
+  async createCollection(
+    collectionId = this.collectionId,
+    databaseId = this.databaseId,
+  ) {
     try {
-      if (databaseId && this.collectionId) {
+      this.collectionId = collectionId || "comments"
+      if (databaseId && collectionId) {
         return await this.databases.createCollection(
           databaseId,
           this.collectionId,
@@ -164,6 +172,25 @@ class appcomment {
     }
   }
 
+  async getDocument({
+    documentId,
+    collectionId = this.collectionId,
+    databaseId = this.databaseId,
+    query,
+  }: getDoc) {
+    try {
+      if (collectionId && databaseId) {
+        return await this.databases.getDocument(
+          databaseId,
+          collectionId,
+          documentId,
+          query,
+        )
+      }
+    } catch (err) {
+      throw new Error(`Error getting document :: appwrite\n ${err}`)
+    }
+  }
   async createDocument({
     databaseId = this.databaseId,
     collectionId = this.collectionId,
@@ -189,11 +216,11 @@ class appcomment {
     }
   }
 
-  async listDocuments({
+  async listAllDocuments({
     databaseId = this.databaseId,
     collectionId = this.collectionId,
     query,
-  }: listDocs) {
+  }: query) {
     try {
       if (databaseId && collectionId) {
         return await this.databases.listDocuments(
@@ -245,7 +272,7 @@ class appcomment {
     }
   }
   // ########## ATTRIBUTES ############
-  async createBoolean({
+  async createBool({
     databaseId = this.databaseId,
     collectionId = this.collectionId,
     options,
