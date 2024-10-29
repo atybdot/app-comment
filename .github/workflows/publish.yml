@@ -19,9 +19,9 @@ jobs:
         with:
           version: "latest"
       - name : fix styling
-        run : ormat:fix
+        run : format:fix
       - name: Run Biome
-        run: biome ci .
+        run: biome:ci
 
   publish:
     needs: quality
