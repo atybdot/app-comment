@@ -1,3 +1,4 @@
 pnpm format:fix
 pnpm lint
 pnpm code-check
+pnpm code-check:fix

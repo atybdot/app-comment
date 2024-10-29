@@ -19,9 +19,9 @@ jobs:
         with:
           version: "latest"
       - name : fix styling
-        run : format:fix
+        run : biome format --write
       - name: Run Biome
-        run: biome:ci
+        run: biome ci 
 
   publish:
     needs: quality
