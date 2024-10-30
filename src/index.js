@@ -1,2 +1,2 @@
 import CommentSection from "./components"
-export { CommentSection }
+export default CommentSection

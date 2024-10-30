@@ -1,15 +1,16 @@
 import { Eye, EyeOff, X } from "lucide-react"
-import { forwardRef, useEffect, useRef, useState } from "react"
+import { forwardRef, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { Loading, onInvalid, onSucess } from "../utils/utils"
+
 import toast from "react-hot-toast"
 import { emailLogin, emailSignup, getUser } from "../lib/appwrite"
-import useCommentStore from "../store/commentsStore"
-import { Loading, onInvalid, onSucess } from "../utils/utils"
+import useComment from "../store/commentContext"
 import CustomToast from "./CustomToast"
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const { updateUser, updateLoginState } = useCommentStore()
+  const { updateUser, updateLoginState } = useComment()
   const {
     register,
     handleSubmit,
@@ -59,7 +60,9 @@ const SignupForm = () => {
           </label>
           <input
             type="text"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border placeholder-zinc-500 text-zinc-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            className={
+              "appearance-none rounded-none relative block w-full px-3 py-2 border placeholder-zinc-500 text-zinc-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            }
             placeholder="name"
             {...register("name", {
               required: { value: true, message: "name is required" },
@@ -141,7 +144,7 @@ const SignupForm = () => {
 }
 
 const LoginForm = () => {
-  const { updateUser, user, updateLoginState } = useCommentStore()
+  const { updateLoginState, updateUser } = useComment()
   const [showPassword, setShowPassword] = useState(false)
   const {
     register,
@@ -271,6 +274,7 @@ const AuthForm = forwardRef((props, ref) => {
       ref={ref}
     >
       <button
+        type="button"
         onClick={() => ref.current.close()}
         className="text-sm absolute top-0 right-0 m-4 dark:text-zinc-100 text-zinc-900 hover:text-blue-500"
       >
@@ -303,6 +307,7 @@ const AuthForm = forwardRef((props, ref) => {
               >
                 <span className="sr-only">Sign in with Google</span>
                 <img
+                  alt="google img"
                   src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg"
                   className="w-5 h-5"
                 />
@@ -316,6 +321,7 @@ const AuthForm = forwardRef((props, ref) => {
                 <span className="sr-only">Sign in with GitHub</span>
 
                 <img
+                  alt="github img"
                   className="w-5 h-5"
                   src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
                 />
@@ -325,6 +331,7 @@ const AuthForm = forwardRef((props, ref) => {
         </div>
         <div className="text-center text-blue-500 dark:text-blue-500">
           <button
+            type="button"
             onClick={() => setIsLogin(!isLogin)}
             className="font-medium hover:text-blue-600"
           >

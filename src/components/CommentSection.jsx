@@ -1,20 +1,17 @@
 import { useEffect } from "react"
 import { Suspense } from "react"
+import { useState } from "react"
 import { commentDB, getUser, logoutUser } from "../lib/appwrite"
-import useCommentStore from "../store/commentsStore"
+import { CommentProvider } from "../store/commentContext"
 import { onInvalid, onSucess } from "../utils/utils"
 import Comment from "./Comment"
+import CustomToast from "./CustomToast"
 import PostComment from "./PostComment"
 
 export default function CommentSection({ postId }) {
-  const {
-    loginState,
-    updateUser,
-    updateLoginState,
-    user,
-    comments,
-    setComments,
-  } = useCommentStore()
+  const [loginState, updateLoginState] = useState(false)
+  const [user, updateUser] = useState({ id: "", name: "" })
+  const [comments, setComments] = useState([])
 
   const handleLogout = async () => {
     try {
@@ -50,9 +47,18 @@ export default function CommentSection({ postId }) {
   }, [])
 
   return (
-    <>
-      <CustomToast />
+    <CommentProvider
+      value={{
+        loginState,
+        user,
+        comments,
+        setComments,
+        updateUser,
+        updateLoginState,
+      }}
+    >
       <div className="max-w-2xl mx-auto p-4 text-zinc-900 dark:text-zinc-100">
+        <CustomToast />
         <h2 className="text-2xl font-bold mb-4 text-zinc-800 dark:text-white">
           Comments
         </h2>
@@ -77,11 +83,12 @@ export default function CommentSection({ postId }) {
                 timestamp={comment.$updatedAt}
                 username={comment.username}
                 commentId={comment.$id}
+                permissions={comment.$permissions}
               />
             ))}
           </Suspense>
         </div>
       </div>
-    </>
+    </CommentProvider>
   )
 }

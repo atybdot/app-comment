@@ -28,7 +28,8 @@
       },
       "nursery": {
         "recommended": true,
-        "useConsistentMemberAccessibility": "off"
+        "useConsistentMemberAccessibility": "off",
+        "noUselessEscapeInRegex": "info"
       },
       "correctness": {
         "recommended": true,

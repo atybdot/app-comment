@@ -4,13 +4,14 @@ import { useForm } from "react-hook-form"
 import { deleteComment, updateComment } from "../lib/appwrite"
 import { CreationDate, Loading, onInvalid, onSucess } from "../utils/utils"
 
-import useCommentStore from "../store/commentsStore"
+import useComment from "../store/commentContext"
 
 export default function Comment({
   content: initialContent,
   username,
   timestamp,
   commentId,
+  permissions = [],
 }) {
   const {
     register,
@@ -22,7 +23,10 @@ export default function Comment({
     },
   })
 
-  const { removeComment, addAComment } = useCommentStore()
+  const { setComments, user } = useComment()
+
+  const showEdit = permissions.includes(`update("user:${user.id}")`)
+  const showDel = permissions.includes(`delete("user:${user.id}")`)
 
   const [isEditing, setIsEditing] = useState(false)
   const [editedContent, setEditedContent] = useState(initialContent)
@@ -38,24 +42,32 @@ export default function Comment({
   }
 
   const updateCommentContent = async (data) => {
-    const res = await updateComment(data.updateCommentContent, commentId)
-    removeComment(res.$id)
-    addAComment(res)
-    isSubmitSuccessful && onSucess("comment updated")
-    setIsEditing(false)
-    setEditedContent(data?.updateCommentContent)
+    try {
+      const res = await updateComment(data.updateCommentContent, commentId)
+      setComments((prev) => prev.filter((item) => item.$id !== commentId))
+      setComments((prev) => [res, ...prev])
+      isSubmitSuccessful && onSucess("comment updated")
+      setIsEditing(false)
+      setEditedContent(data?.updateCommentContent)
+    } catch (error) {
+      setIsEditing(false)
+      onInvalid(error.message)
+      setEditedContent(initialContent)
+    }
   }
 
   const handleDelete = async () => {
     setIsDeleting(true)
     deleteComment(commentId)
       .then(() => {
-        removeComment(commentId)
+        // removeComment(commentId);
+        setComments((prev) => prev.filter((item) => item.$id !== commentId))
         setIsDeleting(false)
         onSucess("comment deleted")
       })
       .catch((err) => {
-        onInvalid("unable to delete this comment")
+        onInvalid(err.message)
+        setIsDeleting(false)
         console.error(err)
       })
   }
@@ -91,6 +103,7 @@ export default function Comment({
               />
               <div className="mt-2 flex justify-end space-x-2">
                 <button
+                  type="button"
                   onClick={handleCancel}
                   className="px-3 py-1 text-sm bg-zinc-200 dark:bg-zinc-600 text-zinc-700 dark:text-zinc-200 rounded-md hover:bg-zinc-300 dark:hover:bg-zinc-500 transition-colors duration-150 flex items-center"
                 >
@@ -99,6 +112,7 @@ export default function Comment({
                 </button>
                 <button
                   disabled={isSubmitting}
+                  type="button"
                   onClick={handleSubmit(updateCommentContent, onInvalid)}
                   className="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-150 flex items-center gap-1"
                 >
@@ -119,22 +133,33 @@ export default function Comment({
             </p>
           )}
           <div className="mt-2 flex space-x-2">
-            <button
-              onClick={handleEdit}
-              className="p-1 text-zinc-500 hover:text-blue-500 dark:text-zinc-400 dark:hover:text-blue-400 transition-colors duration-150"
-              aria-label="Edit comment"
-            >
-              <Edit2 size={18} strokeWidth={1} />
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={isDeleting}
-              className="p-1 text-zinc-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-400 transition-colors duration-150 inline-flex gap-1 items-center"
-              aria-label="Delete comment"
-            >
-              {isDeleting ? <Loading /> : <Trash2 size={18} strokeWidth={1} />}
-              {isDeleting ? "deleting..." : ""}
-            </button>
+            {showEdit ? (
+              <button
+                type="button"
+                onClick={handleEdit}
+                className="p-1 text-zinc-500 hover:text-blue-500 dark:text-zinc-400 dark:hover:text-blue-400 transition-colors duration-150"
+                aria-label="Edit comment"
+              >
+                <Edit2 size={18} strokeWidth={1} />
+              </button>
+            ) : null}
+
+            {showDel ? (
+              <button
+                type="button"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="p-1 text-zinc-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-400 transition-colors duration-150 inline-flex gap-1 items-center"
+                aria-label="Delete comment"
+              >
+                {isDeleting ? (
+                  <Loading />
+                ) : (
+                  <Trash2 size={18} strokeWidth={1} />
+                )}
+                {isDeleting ? "deleting..." : ""}
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

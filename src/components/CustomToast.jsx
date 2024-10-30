@@ -15,6 +15,7 @@ function CustomToast() {
                 {message}
                 {t.type !== "loading" && (
                   <button
+                    type="button"
                     className="hover:text-blue-500 hover:bg-blue-200 p-1 rounded transition-all duration-150"
                     onClick={() => toast.dismiss(t.id)}
                   >

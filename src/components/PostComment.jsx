@@ -4,10 +4,10 @@ import React from "react"
 import { Loading, onInvalid, onSucess } from "../utils/utils"
 
 import { useForm } from "react-hook-form"
-import { addComment, updateComment } from "../lib/appwrite"
+import { addComment } from "../lib/appwrite"
 import AuthForm from "./AuthForm"
 
-import useCommentStore from "../store/commentsStore"
+import useComment from "../store/commentContext"
 
 export function AddComment({ postId }) {
   const {
@@ -17,7 +17,7 @@ export function AddComment({ postId }) {
     reset,
   } = useForm()
 
-  const { user, addAComment, comments } = useCommentStore()
+  const { user, setComments } = useComment()
 
   const createComment = async (data) => {
     const commentData = {
@@ -28,7 +28,7 @@ export function AddComment({ postId }) {
     try {
       isValid &&
         (await addComment(commentData, user.id).then((data) => {
-          addAComment(data)
+          setComments((prev) => [data, ...prev])
         }))
 
       onSucess("comment added")
@@ -86,6 +86,7 @@ function Skeleton() {
       <AuthForm ref={dialogeRef} />
       <div className="absolute w-full h-full backdrop-blur-[2px] rounded-md text-center place-content-center top-0 left-0 z-10">
         <button
+          type="button"
           onClick={() => dialogeRef.current.showModal()}
           className="text-blue-500"
         >
