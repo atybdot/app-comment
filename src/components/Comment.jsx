@@ -1,8 +1,8 @@
 import { Check, Edit2, Trash2, X } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { deleteComment, updateComment } from "/src/lib/appwrite"
-import { CreationDate, Loading, onInvalid, onSucess } from "/src/utils/utils"
+import { deleteComment, updateComment } from "../lib/appwrite"
+import { CreationDate, Loading, onInvalid, onSucess } from "../utils/utils"
 
 import useComment from "../store/commentContext"
 

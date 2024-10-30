@@ -3,9 +3,9 @@ import { forwardRef, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 
-import { emailLogin, emailSignup, getUser } from "/src/lib/appwrite"
-import useComment from "/src/store/commentContext"
-import { Loading, onInvalid, onSucess } from "/src/utils/utils"
+import { emailLogin, emailSignup, getUser } from "../lib/appwrite"
+import useComment from "../store/commentContext"
+import { Loading, onInvalid, onSucess } from "../utils/utils"
 import CustomToast from "./CustomToast"
 
 const SignupForm = () => {

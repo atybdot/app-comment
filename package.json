@@ -1,6 +1,6 @@
 {
   "name": "app-comment",
-  "version": "0.0.2",
+  "version": "0.0.21",
   "description": "seamlessly integrate a comment section into your React or Astro project",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
