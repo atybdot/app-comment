@@ -1,6 +1,6 @@
 {
   "name": "app-comment",
-  "version": "0.0.21",
+  "version": "0.0.1",
   "description": "seamlessly integrate a comment section into your React or Astro project",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -23,7 +23,7 @@
   },
   "author": "aybdot <180611249+atybdot@users.noreply.github.com> (https://github.com/atybdot)",
   "license": "MIT",
-  "homepage": "https://github.com/atybdot/app-comment-react",
+  "homepage": "https://github.com/atybdot/app-comment",
   "dependencies": {
     "appwrite": "^16.0.2",
     "javascript-time-ago": "^2.5.11",
