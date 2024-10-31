@@ -1,0 +1,40 @@
+{
+  "name": "devel",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --apply-unsafe ",
+    "format": "biome format .",
+    "format:fix": "biome format --write ",
+    "code-check": "biome check ",
+    "code-check:fix": "biome check --apply-unsafe "
+  },
+  "dependencies": {
+    "javascript-time-ago": "^2.5.11",
+    "lucide-react": "^0.453.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.1",
+    "react-hot-toast": "^2.4.1",
+    "react-time-ago": "^7.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@hookform/devtools": "^4.3.1",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "appwrite": "^16.0.2",
+    "autoprefixer": "^10.4.20",
+    "globals": "^15.11.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "vite": "^5.4.9",
+    "zustand": "^5.0.0"
+  }
+}

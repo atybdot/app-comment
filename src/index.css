@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --duration : 700ms
+}
+@layer {
+
+  #auth-dialoge {
+    transition: display var(--duration) allow-discrete, overlay var(--duration) allow-discrete;
+    animation: close var(--duration) ;
+    &[open] {
+      animation: open var(--duration);
+    }
+    backdrop-filter: blur(4px);
+  }
+  body:has(#auth-dialoge[open]) {
+    transition: filter var(--duration) linear;
+    animation: blurEnter var(--duration) forwards ;
+    
+  }
+  body:has(#auth-dialoge){
+    transition: filter var(--duration) linear;
+    animation: blurExit var(--duration) forwards ;
+  }
+}
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes blurEnter {
+  from {
+    filter: blur(0px);
+  }
+  to {
+    filter: blur(4px);
+  }
+}
+@keyframes blurExit {
+  from {
+    filter: blur(4px);
+  }
+  to {
+    filter: blur(0px);
+  }
+}
