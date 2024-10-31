@@ -35,20 +35,19 @@ npm run dev --open
 
 ### screenshots
 home page
-![home page of the project](/src/assets/user-loggedout.png)  
+![home page of the project](https://i.ibb.co/ZTmMdcz/screenzy-1730369746745.png)  
 
 homepage after user login
-![homepage after user login](/src/assets/user-loggedin.png)  
-
-
+![homepage after user login](https://i.ibb.co/VH8SKTM/screenzy-1730369982150.png)  
+  
 login
-![login form](/src/assets/sign-in.png)  
+![login form](https://i.ibb.co/3r7DfcK/screenzy-1730370125971.png)  
   
 sign-up
-![signup from](/src/assets/sign-up.png)  
+![signup from](https://i.ibb.co/jZnFLvF/screenzy-1730370139127.png)  
 
 editing comment
-![editing comment](/src/assets/user-editing.png)
+![editing comment](https://i.ibb.co/g7S2dL6/screenzy-1730370053341.png)
 
 ## Todo 📑
 - [ ] add OAuth2

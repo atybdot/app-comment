@@ -14,7 +14,7 @@ const onInvalid = (text) => {
   });
 };
 
-const onSucess = (text) => {
+const onSuccess = (text) => {
   toast.success(text, {
     style: {
       background: "hsl(120,100%,90%)",
@@ -38,4 +38,4 @@ const CreationDate = ({ date }) => {
     </div>
   );
 };
-export { onInvalid, onSucess, Loading, CreationDate };
+export { onInvalid, onSuccess, Loading, CreationDate };

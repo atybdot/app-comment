@@ -1,13 +1,13 @@
-import { Send } from "lucide-react"
+import { Send } from "lucide-react";
 /* eslint-disable no-unused-vars */
-import React from "react"
-import { Loading, onInvalid, onSucess } from "../utils/utils"
+import React from "react";
+import { Loading, onInvalid, onSuccess } from "../utils/utils";
 
-import { useForm } from "react-hook-form"
-import { addComment } from "../lib/appwrite"
-import AuthForm from "./AuthForm"
+import { useForm } from "react-hook-form";
+import { addComment } from "../lib/appwrite";
+import AuthForm from "./AuthForm";
 
-import useComment from "../store/commentContext"
+import useComment from "../store/commentContext";
 
 export function AddComment() {
   const {
@@ -15,35 +15,35 @@ export function AddComment() {
     handleSubmit,
     formState: { isSubmitting, isValid },
     reset,
-  } = useForm()
+  } = useForm();
 
-  const { user, setComments,postId } = useComment()
+  const { user, setComments, postId } = useComment();
 
   const createComment = async (data) => {
     const commentData = {
       postId,
       content: data.newComment,
       username: user.name,
-    }
+    };
     try {
       isValid &&
         (await addComment(commentData, user.id).then((data) => {
-          setComments((prev) => [data, ...prev])
-        }))
+          setComments((prev) => [data, ...prev]);
+        }));
 
-      onSucess("comment added")
-      reset()
+      onSuccess("comment added");
+      reset();
     } catch (error) {
-      onInvalid("unable to add comment")
-      console.error(error)
+      onInvalid("unable to add comment");
+      console.error(error);
     }
-  }
+  };
   return (
     <>
       <form
         onSubmit={handleSubmit(createComment, (data) => {
-          console.log(data.newComment)
-          onInvalid(data.newComment.message)
+          console.log(data.newComment);
+          onInvalid(data.newComment.message);
         })}
         className="space-y-4 relative"
       >
@@ -76,11 +76,11 @@ export function AddComment() {
         </button>
       </form>
     </>
-  )
+  );
 }
 
 function Skeleton() {
-  const dialogeRef = React.useRef()
+  const dialogeRef = React.useRef();
   return (
     <div className="overflow-hidden rounded-md relative ring-1 ring-zinc-800 dark:ring-zinc-400">
       <AuthForm ref={dialogeRef} />
@@ -108,10 +108,10 @@ function Skeleton() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 function PostComment({ showLogin }) {
-  return <>{showLogin ? <Skeleton /> : <AddComment />}</>
+  return <>{showLogin ? <Skeleton /> : <AddComment />}</>;
 }
-export default PostComment
+export default PostComment;

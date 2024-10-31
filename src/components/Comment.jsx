@@ -1,10 +1,10 @@
-import { Check, Edit2, Trash2, X } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { deleteComment, updateComment } from "../lib/appwrite"
-import { CreationDate, Loading, onInvalid, onSucess } from "../utils/utils"
+import { Check, Edit2, Trash2, X } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { deleteComment, updateComment } from "../lib/appwrite";
+import { CreationDate, Loading, onInvalid, onSuccess } from "../utils/utils";
 
-import useComment from "../store/commentContext"
+import useComment from "../store/commentContext";
 
 export default function Comment({
   content: initialContent,
@@ -21,55 +21,55 @@ export default function Comment({
     defaultValues: {
       updateCommentContent: initialContent,
     },
-  })
+  });
 
-  const { setComments, user } = useComment()
+  const { setComments, user } = useComment();
 
-  const showEdit = permissions.includes(`update("user:${user.id}")`)
-  const showDel = permissions.includes(`delete("user:${user.id}")`)
+  const showEdit = permissions.includes(`update("user:${user.id}")`);
+  const showDel = permissions.includes(`delete("user:${user.id}")`);
 
-  const [isEditing, setIsEditing] = useState(false)
-  const [editedContent, setEditedContent] = useState(initialContent)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(initialContent);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleEdit = () => {
-    setIsEditing(true)
-  }
+    setIsEditing(true);
+  };
 
   const handleCancel = () => {
-    setIsEditing(false)
-    setEditedContent(initialContent)
-  }
+    setIsEditing(false);
+    setEditedContent(initialContent);
+  };
 
   const updateCommentContent = async (data) => {
     try {
-      const res = await updateComment(data.updateCommentContent, commentId)
-      setComments((prev) => prev.filter((item) => item.$id !== commentId))
-      setComments((prev) => [res, ...prev])
-      isSubmitSuccessful && onSucess("comment updated")
-      setIsEditing(false)
-      setEditedContent(data?.updateCommentContent)
+      const res = await updateComment(data.updateCommentContent, commentId);
+      setComments((prev) => prev.filter((item) => item.$id !== commentId));
+      setComments((prev) => [res, ...prev]);
+      isSubmitSuccessful && onSuccess("comment updated");
+      setIsEditing(false);
+      setEditedContent(data?.updateCommentContent);
     } catch (error) {
-      setIsEditing(false)
-      onInvalid(error.message)
-      setEditedContent(initialContent)
+      setIsEditing(false);
+      onInvalid(error.message);
+      setEditedContent(initialContent);
     }
-  }
+  };
 
   const handleDelete = async () => {
-    setIsDeleting(true)
+    setIsDeleting(true);
     deleteComment(commentId)
       .then(() => {
-        setComments((prev) => prev.filter((item) => item.$id !== commentId))
-        setIsDeleting(false)
-        onSucess("comment deleted")
+        setComments((prev) => prev.filter((item) => item.$id !== commentId));
+        setIsDeleting(false);
+        onSuccess("comment deleted");
       })
       .catch((err) => {
-        onInvalid(err.message)
-        setIsDeleting(false)
-        console.error(err)
-      })
-  }
+        onInvalid(err.message);
+        setIsDeleting(false);
+        console.error(err);
+      });
+  };
 
   return (
     <div className="bg-zinc-50 drop-shadow-md dark:bg-zinc-800 rounded-lg p-4">
@@ -163,5 +163,5 @@ export default function Comment({
         </div>
       </div>
     </div>
-  )
+  );
 }

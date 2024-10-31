@@ -1,51 +1,51 @@
-import { Eye, EyeOff, X } from "lucide-react"
-import { forwardRef, useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
+import { Eye, EyeOff, X } from "lucide-react";
+import { forwardRef, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-import { emailLogin, emailSignup, getUser } from "../lib/appwrite"
-import useComment from "../store/commentContext"
-import { Loading, onInvalid, onSucess } from "../utils/utils"
-import CustomToast from "./CustomToast"
+import { emailLogin, emailSignup, getUser } from "../lib/appwrite";
+import useComment from "../store/commentContext";
+import { Loading, onInvalid, onSuccess } from "../utils/utils";
+import CustomToast from "./CustomToast";
 
 const SignupForm = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const { updateUser, updateLoginState } = useComment()
+  const [showPassword, setShowPassword] = useState(false);
+  const { updateUser, updateLoginState } = useComment();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm()
+  } = useForm();
 
   const sumbitForm = async (data) => {
-    const d = document.querySelector("#auth-dialoge")
+    const d = document.querySelector("#auth-dialoge");
     try {
       isValid &&
         (await emailSignup(data.name, data.email, data.password).then(
           async (res) => {
-            onSucess("user created")
-            await emailLogin(data.email,data.password)
-            updateUser({ id: res.$id, name: res.name })
-            updateLoginState(true)
-            d.close()
-          },
-        ))
+            onSuccess("user created");
+            await emailLogin(data.email, data.password);
+            updateUser({ id: res.$id, name: res.name });
+            updateLoginState(true);
+            d.close();
+          }
+        ));
     } catch (err) {
-      onInvalid(err.message)
+      onInvalid(err.message);
     }
-  }
+  };
 
   const handleError = (data) => {
     if (data.name) {
-      onInvalid(data.name.message)
+      onInvalid(data.name.message);
     }
     if (data.email) {
-      onInvalid(data.email.message)
+      onInvalid(data.email.message);
     }
     if (data.password) {
-      onInvalid(data.password.message)
+      onInvalid(data.password.message);
     }
-  }
+  };
 
   return (
     <form
@@ -141,20 +141,20 @@ const SignupForm = () => {
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 const LoginForm = () => {
-  const { updateLoginState, updateUser } = useComment()
-  const [showPassword, setShowPassword] = useState(false)
+  const { updateLoginState, updateUser } = useComment();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm()
+  } = useForm();
 
   const sumbitForm = async (data) => {
-    const d = document.querySelector("#auth-dialoge")
+    const d = document.querySelector("#auth-dialoge");
     try {
       isValid &&
         (await toast.promise(
@@ -168,27 +168,27 @@ const LoginForm = () => {
             style: {
               background: "hsl(120,100%,90%)",
             },
-          },
-        ))
+          }
+        ));
 
       await getUser().then((data) => {
-        updateUser({ name: data.name, id: data.$id })
-        updateLoginState(true)
-        d.close()
-      })
+        updateUser({ name: data.name, id: data.$id });
+        updateLoginState(true);
+        d.close();
+      });
     } catch (err) {
-      onInvalid(err.message)
+      onInvalid(err.message);
     }
-  }
+  };
 
   const handleError = (data) => {
     if (data.email) {
-      onInvalid(data.email.message)
+      onInvalid(data.email.message);
     }
     if (data.password) {
-      onInvalid(data.password.message)
+      onInvalid(data.password.message);
     }
-  }
+  };
 
   return (
     <form
@@ -259,15 +259,15 @@ const LoginForm = () => {
         {isSubmitting ? <Loading /> : "Sign in"}
       </button>
     </form>
-  )
-}
+  );
+};
 
 const AuthForm = forwardRef((props, ref) => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
-    ref.current.close()
-  }, [])
+    ref.current.close();
+  }, []);
   return (
     <dialog
       id="auth-dialoge"
@@ -343,7 +343,7 @@ const AuthForm = forwardRef((props, ref) => {
         </div>
       </div>
     </dialog>
-  )
-})
+  );
+});
 
-export default AuthForm
+export default AuthForm;
